@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import db from "utils/db.server";
+const db = require("../utils/db.server.js");
 
-export const listModules = async () => {
+const listModules = async () => {
   return await db.modules.findMany({
     select: {
       id: true,
@@ -11,7 +11,7 @@ export const listModules = async () => {
   });
 };
 
-export const getModule = async (id) => {
+const getModule = async (id) => {
   return await db.modules.findUnique({
     where: {
       id,
@@ -19,7 +19,7 @@ export const getModule = async (id) => {
   });
 };
 
-export const createModule = async (name, id_course) => {
+const createModule = async (name, id_course) => {
   return await db.modules.create({
     data: {
       name,
@@ -28,7 +28,7 @@ export const createModule = async (name, id_course) => {
   });
 };
 
-export const deleteModule = async (id) => {
+const deleteModule = async (id) => {
   return await db.modules.delete({
     where: {
       id,
@@ -36,7 +36,7 @@ export const deleteModule = async (id) => {
   });
 };
 
-export const updateModule = async (id, name, id_course) => {
+const updateModule = async (id, name, id_course) => {
   return await db.modules.update({
     where: {
       id,
@@ -46,4 +46,12 @@ export const updateModule = async (id, name, id_course) => {
       id_course,
     },
   });
+};
+
+module.exports = {
+  listModules,
+  getModule,
+  createModule,
+  deleteModule,
+  updateModule,
 };

@@ -1,11 +1,10 @@
-import * as express from "express";
-import { Request, Response } from "express";
-import * as multer from "multer";
-import * as multerConfig from "config/multer";
+const express = require("express");
+const multer = require("multer");
+// const multerConfig = require("config/multer");
 
-import * as Controller from "../controllers/CourseController";
+const Controller = require("../controllers/CourseController");
 
-export const courseRouter = express.Router();
+const courseRouter = express.Router();
 
 courseRouter.get("/courses", async (req, res) =>
   Controller.getCourse(req, res)
@@ -21,7 +20,7 @@ courseRouter.post("/course/add", async (req, res) =>
 
 courseRouter.post(
   "/courseimg/add",
-  multer(multerConfig).single("file"),
+  multer().single("file"),
   async (req, res) => {
     console.log(req);
     Controller.saveCourseImg(req, res);
@@ -35,3 +34,5 @@ courseRouter.delete("/course/delete/:id", async (req, res) =>
 courseRouter.put("/course/update/:id", async (req, res) =>
   Controller.updateCourse(req, res)
 );
+
+module.exports = courseRouter;

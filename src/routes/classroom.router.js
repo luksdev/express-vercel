@@ -1,9 +1,8 @@
-import * as express from "express";
-import { Request, Response } from "express";
+const express = require("express");
 
-import * as Controller from "../controllers/ClassroomController";
+const Controller = require("../controllers/ClassroomController");
 
-export const classroomRouter = express.Router();
+const classroomRouter = express.Router();
 
 classroomRouter.get("/classes", async (req, res) =>
   Controller.getClassroom(req, res)
@@ -24,3 +23,5 @@ classroomRouter.delete("/classroom/delete/:id", async (req, res) =>
 classroomRouter.put("/classroom/update/:id", async (req, res) =>
   Controller.updateClassroom(req, res)
 );
+
+module.exports = classroomRouter;

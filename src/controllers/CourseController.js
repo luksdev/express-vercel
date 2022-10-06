@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Request, Response } from "express";
-import * as CourseService from "services/course.service";
-import { Prisma } from "@prisma/client";
+const CourseService = require("../services/course.service");
 
 const getCourse = (req, res) => {
   CourseService.listCourses()
@@ -104,7 +102,7 @@ const updateCourse = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
-export {
+module.exports = {
   getCourse,
   getCourseById,
   saveCourse,

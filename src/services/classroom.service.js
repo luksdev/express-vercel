@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import db from "utils/db.server";
+const db = require("../utils/db.server.js");
 
-export const listClasses = async () => {
+const listClasses = async () => {
   return await db.classes.findMany({
     select: {
       id: true,
@@ -13,7 +13,7 @@ export const listClasses = async () => {
   });
 };
 
-export const getClassroom = async (id) => {
+const getClassroom = async (id) => {
   return await db.classes.findUnique({
     where: {
       id,
@@ -21,12 +21,7 @@ export const getClassroom = async (id) => {
   });
 };
 
-export const createClassroom = async (
-  title,
-  description,
-  url_video,
-  id_module
-) => {
+const createClassroom = async (title, description, url_video, id_module) => {
   return await db.classes.create({
     data: {
       title,
@@ -37,7 +32,7 @@ export const createClassroom = async (
   });
 };
 
-export const deleteClassroom = async (id) => {
+const deleteClassroom = async (id) => {
   return await db.classes.delete({
     where: {
       id,
@@ -45,7 +40,7 @@ export const deleteClassroom = async (id) => {
   });
 };
 
-export const updateClassroom = async (
+const updateClassroom = async (
   id,
   title,
   description,
@@ -63,4 +58,12 @@ export const updateClassroom = async (
       id_module,
     },
   });
+};
+
+module.exports = {
+  listClasses,
+  getClassroom,
+  createClassroom,
+  deleteClassroom,
+  updateClassroom,
 };

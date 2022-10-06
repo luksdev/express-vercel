@@ -1,11 +1,9 @@
-import * as express from "express";
-import { Request, Response } from "express";
-import * as multer from "multer";
-import * as multerConfig from "config/multer";
+const express = require("express");
+const multer = require("multer");
 
-import * as Controller from "../controllers/ModuleController";
+const Controller = require("../controllers/ModuleController");
 
-export const moduleRouter = express.Router();
+const moduleRouter = express.Router();
 
 moduleRouter.get("/modules", async (req, res) =>
   Controller.getModule(req, res)
@@ -26,3 +24,5 @@ moduleRouter.delete("/module/delete/:id", async (req, res) =>
 moduleRouter.put("/module/update/:id", async (req, res) =>
   Controller.updateModule(req, res)
 );
+
+module.exports = moduleRouter;

@@ -1,6 +1,4 @@
-import { Request, Response } from "express";
-import * as ModuleService from "services/module.service";
-import { Prisma } from "@prisma/client";
+const ModuleService = require("../services/module.service");
 
 const getModule = (req, res) => {
   ModuleService.listModules()
@@ -68,4 +66,10 @@ const updateModule = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
-export { getModule, getModuleById, saveModule, deleteModule, updateModule };
+module.exports = {
+  getModule,
+  getModuleById,
+  saveModule,
+  deleteModule,
+  updateModule,
+};

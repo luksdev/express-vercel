@@ -1,6 +1,4 @@
-import { Request, Response } from "express";
-import * as ClassroomService from "services/classroom.service";
-import { Prisma } from "@prisma/client";
+const ClassroomService = require("../services/classroom.service.js");
 
 const getClassroom = (req, res) => {
   ClassroomService.listClasses()
@@ -79,7 +77,7 @@ const updateClassroom = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
-export {
+module.exports = {
   getClassroom,
   getClassroomById,
   saveClasroom,

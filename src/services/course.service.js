@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import db from "utils/db.server";
+const db = require("../utils/db.server.js");
 
-export const listCourses = async () => {
+const listCourses = async () => {
   return await db.courses.findMany({
     select: {
       id: true,
@@ -14,7 +14,7 @@ export const listCourses = async () => {
   });
 };
 
-export const getCourse = async (id) => {
+const getCourse = async (id) => {
   return await db.courses.findUnique({
     where: {
       id,
@@ -22,7 +22,7 @@ export const getCourse = async (id) => {
   });
 };
 
-export const createCourse = async (
+const createCourse = async (
   title,
   cover_image,
   description,
@@ -40,7 +40,7 @@ export const createCourse = async (
   });
 };
 
-export const insertImg = async (name, url, key, id_course, size) => {
+const insertImg = async (name, url, key, id_course, size) => {
   return await db.imagesCourses.create({
     data: {
       name,
@@ -53,7 +53,7 @@ export const insertImg = async (name, url, key, id_course, size) => {
   });
 };
 
-export const deleteCourse = async (id) => {
+const deleteCourse = async (id) => {
   return await db.courses.delete({
     where: {
       id,
@@ -61,7 +61,7 @@ export const deleteCourse = async (id) => {
   });
 };
 
-export const updateCourse = async (
+const updateCourse = async (
   id,
   title,
   cover_image,
@@ -81,4 +81,13 @@ export const updateCourse = async (
       id_instructor,
     },
   });
+};
+
+module.exports = {
+  listCourses,
+  getCourse,
+  createCourse,
+  deleteCourse,
+  updateCourse,
+  insertImg,
 };

@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map(name: "categories")
+}
+
+model Instructors {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map(name: "instructors")
+}
+
+model Courses {
+  id            Int    @id @default(autoincrement())
+  title         String
+  cover_image   String
+  description   String
+  id_category   Int
+  id_instructor Int
+
+  @@map(name: "courses")
+}
+
+model Modules {
+  id        Int    @id @default(autoincrement())
+  name      String
+  id_course Int
+
+  @@map(name: "modules")
+}
+
+model Classes {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  url_video   String
+  id_module   Int
+
+  @@map(name: "classes")
+}
+
+model Library {
+  id       Int    @id @default(autoincrement())
+  url      String
+  id_class Int
+
+  @@map(name: "library")
+}
+
+model Comments {
+  id         Int     @id @default(autoincrement())
+  comment    String
+  date       String?
+  id_comment Int?
+  id_class   Int
+  id_user    Int
+  Users      Users?  @relation(fields: [usersId], references: [id])
+  usersId    Int?
+
+  @@map(name: "comments")
+}
+
+model ImagesCourses {
+  id        Int      @id @default(autoincrement())
+  name      String
+  key       String
+  size      Int
+  url_image String
+  id_course Int
+  createdAt DateTime @default(now())
+
+  @@map(name: "images_courses")
+}
+
+model Users {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  email      String     @unique
+  name       String
+  identifier String     @unique
+  job        String?
+  password   String
+  role       Int        @default(0) // 0: user, 1: admin, 2: instructor
+  comments   Comments[]
+
+  @@map(name: "users")
+}
