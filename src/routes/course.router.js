@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-// const multerConfig = require("config/multer");
+const multerConfig = require("../config/multer");
 
 const Controller = require("../controllers/CourseController");
 
@@ -20,7 +20,7 @@ courseRouter.post("/course/add", async (req, res) =>
 
 courseRouter.post(
   "/courseimg/add",
-  multer().single("file"),
+  multer(multerConfig).single("file"),
   async (req, res) => {
     console.log(req);
     Controller.saveCourseImg(req, res);

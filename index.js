@@ -14,7 +14,8 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(cors());
 
@@ -23,6 +24,6 @@ app.use("/", classroomRouter);
 app.use("/", courseRouter);
 app.use("/", moduleRouter);
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server started on port 3000");
 });
