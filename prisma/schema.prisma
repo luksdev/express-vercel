@@ -88,6 +88,18 @@ model ImagesCourses {
   @@map(name: "images_courses")
 }
 
+model ImagesInstructors {
+  id        Int      @id @default(autoincrement())
+  name      String
+  key       String
+  size      Int
+  url_image String
+  id_course Int
+  createdAt DateTime @default(now())
+
+  @@map(name: "images_instructors")
+}
+
 model Users {
   id         Int        @id @default(autoincrement())
   createdAt  DateTime   @default(now())

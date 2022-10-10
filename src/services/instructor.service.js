@@ -1,52 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const db = require("../utils/db.server.js");
 
-const listUsers = async () => {
-  return await db.users.findMany({
+const listInstructors = async () => {
+  return await db.instructors.findMany({
     select: {
       id: true,
       name: true,
-      email: true,
-      role: true,
-      job: true,
-      identifier: true,
-      createdAt: true,
-      updatedAt: true,
+      description: true,
+      image_profile: true,
     },
   });
 };
 
-const getUser = async (id) => {
-  return await db.users.findUnique({
+const getInstructor = async (id) => {
+  return await db.instructors.findUnique({
     where: {
       id,
     },
   });
 };
 
-const loginUser = async (email) => {
-  // Verificar se a senha criptografada com bcrypt é igual a senha do usuário
-  return await db.users.findUnique({
-    where: {
-      email,
-    },
-  });
-};
-
-const createUser = async (name, email, role, identifier, password, job) => {
-  return await db.users.create({
+const insertImg = async (name, url, key, id_course, size) => {
+  return await db.imagesInstructors.create({
     data: {
       name,
-      email,
-      role,
-      identifier,
-      password,
-      job,
+      size,
+      url_image: url,
+      key: key,
+      createdAt: new Date(),
+      id_course,
     },
   });
 };
 
-const deleteUser = async (id) => {
+const createInstructor = async (name, description, image_profile) => {
+  return await db.instructors.create({
+    data: {
+      name,
+      description,
+      image_profile,
+    },
+  });
+};
+
+const deleteInstructor = async (id) => {
   return await db.users.delete({
     where: {
       id,
@@ -54,26 +51,23 @@ const deleteUser = async (id) => {
   });
 };
 
-const updateUser = async (id, name, email, role, identifier, password) => {
+const updateInstructor = async (id, name) => {
   return await db.users.update({
     where: {
       id,
     },
     data: {
       name,
-      email,
-      role,
-      identifier,
-      password,
+      description,
+      image_profile,
     },
   });
 };
 
 module.exports = {
-  listUsers,
-  getUser,
-  loginUser,
-  createUser,
-  deleteUser,
-  updateUser,
+  listInstructors,
+  getInstructor,
+  createInstructor,
+  deleteInstructor,
+  updateInstructor,
 };
