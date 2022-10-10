@@ -29,7 +29,7 @@ const getModuleById = (req, res) => {
 const saveModule = (req, res) => {
   const { name, id_course } = req.body;
 
-  ModuleService.createModule(name, id_course)
+  ModuleService.createModule(name, parseInt(id_course))
     .then((module) => {
       if (module) {
         res.status(201).send(module);

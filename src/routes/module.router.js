@@ -13,7 +13,7 @@ moduleRouter.get("/module/:id", async (req, res) =>
   Controller.getModuleById(req, res)
 );
 
-moduleRouter.post("/course/add", async (req, res) =>
+moduleRouter.post("/module/add", async (req, res) =>
   Controller.saveModule(req, res)
 );
 

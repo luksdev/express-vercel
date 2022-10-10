@@ -18,8 +18,10 @@ model Categories {
 }
 
 model Instructors {
-  id   Int    @id @default(autoincrement())
-  name String
+  id            Int    @id @default(autoincrement())
+  name          String
+  description   String
+  image_profile String
 
   @@map(name: "instructors")
 }
