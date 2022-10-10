@@ -2,20 +2,20 @@ const express = require("express");
 const multer = require("multer");
 const multerConfig = require("../config/multerProfile");
 
-const Controller = require("../controllers/CourseController");
+const Controller = require("../controllers/InstructorController");
 
 const instructorRouter = express.Router();
 
 instructorRouter.get("/instructors", async (req, res) =>
-  Controller.getCourse(req, res)
+  Controller.getInstructors(req, res)
 );
 
 instructorRouter.get("/instructor/:id", async (req, res) =>
-  Controller.getCourseById(req, res)
+  Controller.getInstructorById(req, res)
 );
 
 instructorRouter.post("/instructor/add", async (req, res) =>
-  Controller.saveCourse(req, res)
+  Controller.saveInstructor(req, res)
 );
 
 instructorRouter.post(
@@ -23,16 +23,16 @@ instructorRouter.post(
   multer(multerConfig).single("file"),
   async (req, res) => {
     console.log(req);
-    Controller.saveCourseImg(req, res);
+    Controller.saveInstructorImg(req, res);
   }
 );
 
 instructorRouter.delete("/instructor/delete/:id", async (req, res) =>
-  Controller.deleteCourse(req, res)
+  Controller.deleteInstructor(req, res)
 );
 
 instructorRouter.put("/instructor/update/:id", async (req, res) =>
-  Controller.updateCourse(req, res)
+  Controller.updateInstructor(req, res)
 );
 
 module.exports = instructorRouter;
