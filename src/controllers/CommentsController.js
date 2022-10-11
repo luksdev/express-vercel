@@ -58,7 +58,9 @@ const deleteComment = (req, res) => {
             res.status('404').send('Comment not found')
         }
     })
-
+    .catch((e) => {
+        res.status(500).send(e.message)
+    })
 }
 
 const updateComment = (req, res) => {
@@ -68,6 +70,16 @@ const updateComment = (req, res) => {
     ,   comment
     ,   date
     )
+    .then((comment) => {
+        if(comment) {
+            res.status(200).send(comment)
+        }else{
+            res.status('404').send('Comment not found')
+        }
+    })
+    .catch((e) => {
+        res.status(500).send(e.message)
+    })
 
 }
 
