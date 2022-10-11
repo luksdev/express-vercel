@@ -68,6 +68,7 @@ module.exports = {
   listInstructors,
   getInstructor,
   createInstructor,
+  insertImg,
   deleteInstructor,
   updateInstructor,
 };

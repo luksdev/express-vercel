@@ -61,7 +61,6 @@ module.exports = {
       "image/gif",
       "application/pdf",
       "application/zip",
-
     ];
 
     if (allowedMimes.includes(file.mimetype)) {
