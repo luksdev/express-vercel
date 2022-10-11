@@ -6,15 +6,13 @@ const Controller = require("../controllers/LibraryController");
 
 const libraryRouter = express.Router();
 
-
-
 libraryRouter.post(
-    "/library/upload"
-,   multer(multerConfig).single
-,   async (req, res) => {
-        Controller.saveContentUpload(req, res)
-    }
-)
+  "/library/upload",
+  multer(multerConfig).single,
+  async (req, res) => {
+    Controller.saveContentUpload(req, res);
+  }
+);
 
 libraryRouter.get("/content/:id", async (req, res) =>
   Controller.getContent(req, res)
