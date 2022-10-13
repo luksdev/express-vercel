@@ -44,11 +44,11 @@ const saveInstructor = (req, res) => {
 };
 
 const saveInstructorImg = (req, res) => {
-  const { id_course } = req.body;
+  const { id_instructor } = req.body;
   const { originalname: name, key, size, location: url } = req.file;
 
   // converter id_course para number
-  const id = Number(id_course);
+  const id = Number(id_instructor);
 
   InstructorService.insertImg(name, url, key, id, size)
     .then((img) => {
@@ -74,9 +74,11 @@ const deleteInstructor = (req, res) => {
 };
 
 const updateInstructor = (req, res) => {
-  const { name, description, image_profile } = req.body;
+  const { id, name, description, image_profile } = req.body;
 
-  InstructorService.updateInstructor(name, description, image_profile)
+  console.log("Req update instructor: ", req.body);
+
+  InstructorService.updateInstructor(id, name, description, image_profile)
     .then((course) => {
       if (course) {
         res.status(200).send(course);
@@ -84,7 +86,10 @@ const updateInstructor = (req, res) => {
         res.status(404).send("Course not found");
       }
     })
-    .catch((e) => res.status(500).send(e.message));
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send(e.message);
+    });
 };
 
 module.exports = {

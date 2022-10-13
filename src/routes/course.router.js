@@ -22,7 +22,6 @@ courseRouter.post(
   "/courseimg/add",
   multer(multerConfig).single("file"),
   async (req, res) => {
-    console.log(req);
     Controller.saveCourseImg(req, res);
   }
 );

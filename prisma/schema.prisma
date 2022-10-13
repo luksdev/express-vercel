@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,16 +11,16 @@ model Categories {
   id   Int    @id @default(autoincrement())
   name String
 
-  @@map(name: "categories")
+  @@map("categories")
 }
 
 model Instructors {
   id            Int    @id @default(autoincrement())
   name          String
-  image_profile String
   description   String
+  image_profile String
 
-  @@map(name: "instructors")
+  @@map("instructors")
 }
 
 model Courses {
@@ -34,7 +31,7 @@ model Courses {
   id_category   Int
   id_instructor Int
 
-  @@map(name: "courses")
+  @@map("courses")
 }
 
 model Modules {
@@ -42,7 +39,7 @@ model Modules {
   name      String
   id_course Int
 
-  @@map(name: "modules")
+  @@map("modules")
 }
 
 model Classes {
@@ -52,7 +49,7 @@ model Classes {
   url_video   String
   id_module   Int
 
-  @@map(name: "classes")
+  @@map("classes")
 }
 
 model Library {
@@ -60,7 +57,7 @@ model Library {
   url      String
   id_class Int
 
-  @@map(name: "library")
+  @@map("library")
 }
 
 model Comments {
@@ -70,34 +67,35 @@ model Comments {
   id_comment Int?
   id_class   Int
   id_user    Int
-  Users      Users?  @relation(fields: [usersId], references: [id])
   usersId    Int?
+  Users      Users?  @relation(fields: [usersId], references: [id])
 
-  @@map(name: "comments")
+  @@index([usersId], map: "comments_usersId_fkey")
+  @@map("comments")
 }
 
 model ImagesCourses {
   id        Int      @id @default(autoincrement())
   name      String
   key       String
-  size      Int
   url_image String
   id_course Int
   createdAt DateTime @default(now())
+  size      Int
 
-  @@map(name: "images_courses")
+  @@map("images_courses")
 }
 
 model ImagesInstructors {
-  id        Int      @id @default(autoincrement())
-  name      String
-  key       String
-  size      Int
-  url_image String
-  id_course Int
-  createdAt DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  name          String
+  key           String
+  size          Int
+  url_image     String
+  id_instructor Int
+  createdAt     DateTime @default(now())
 
-  @@map(name: "images_instructors")
+  @@map("images_instructors")
 }
 
 model Users {
@@ -107,10 +105,10 @@ model Users {
   email      String     @unique
   name       String
   identifier String     @unique
-  job        String?
   password   String
-  role       Int        @default(0) // 0: user, 1: admin, 2: instructor
+  role       Int        @default(0)
+  job        String?
   comments   Comments[]
 
-  @@map(name: "users")
+  @@map("users")
 }

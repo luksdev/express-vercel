@@ -20,7 +20,7 @@ const getInstructor = async (id) => {
   });
 };
 
-const insertImg = async (name, url, key, id_course, size) => {
+const insertImg = async (name, url, key, id_instructor, size) => {
   return await db.imagesInstructors.create({
     data: {
       name,
@@ -28,7 +28,7 @@ const insertImg = async (name, url, key, id_course, size) => {
       url_image: url,
       key: key,
       createdAt: new Date(),
-      id_course,
+      id_instructor,
     },
   });
 };
@@ -44,15 +44,15 @@ const createInstructor = async (name, description, image_profile) => {
 };
 
 const deleteInstructor = async (id) => {
-  return await db.users.delete({
+  return await db.instructors.delete({
     where: {
       id,
     },
   });
 };
 
-const updateInstructor = async (id, name) => {
-  return await db.users.update({
+const updateInstructor = async (id, name, description, image_profile) => {
+  return await db.instructors.update({
     where: {
       id,
     },

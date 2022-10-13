@@ -22,7 +22,6 @@ instructorRouter.post(
   "/instructorimg/add",
   multer(multerConfig).single("file"),
   async (req, res) => {
-    console.log(req);
     Controller.saveInstructorImg(req, res);
   }
 );
@@ -31,8 +30,9 @@ instructorRouter.delete("/instructor/delete/:id", async (req, res) =>
   Controller.deleteInstructor(req, res)
 );
 
-instructorRouter.put("/instructor/update/:id", async (req, res) =>
-  Controller.updateInstructor(req, res)
-);
+instructorRouter.put("/instructor/update/:id", async (req, res) => {
+  console.log("Req update instructor: ", req.body);
+  Controller.updateInstructor(req, res);
+});
 
 module.exports = instructorRouter;
