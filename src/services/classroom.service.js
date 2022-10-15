@@ -32,6 +32,15 @@ const createClassroom = async (title, description, url_video, id_module) => {
   });
 };
 
+const insertFiles = async (url, id_class) => {
+  return await db.library.create({
+    data: {
+      url,
+      id_class,
+    },
+  });
+};
+
 const deleteClassroom = async (id) => {
   return await db.classes.delete({
     where: {
@@ -66,4 +75,5 @@ module.exports = {
   createClassroom,
   deleteClassroom,
   updateClassroom,
+  insertFiles,
 };

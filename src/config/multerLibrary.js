@@ -29,7 +29,7 @@ const storageTypes = {
         secretAccessKey: "4dZigvcwgFT0eygVH0UDCB5c8SR4ux5iR6oPi6jM",
       },
     }),
-    bucket: "uploadtraders-lib",
+    bucket: "avatars-profile-4traders",
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: "public-read",
     key: (req, file, cb) => {

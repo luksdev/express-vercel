@@ -45,6 +45,30 @@ const saveClasroom = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
+const saveFiles = (req, res) => {
+  const { id_class } = req.body;
+  console.log(req.body);
+  // const { originalname: name, key, size, location: url } = req.file;
+
+  // converter id_course para number
+  // fazer um for para cada arquivo
+
+  req.files.forEach((element) => {
+    let filesSended = [];
+    ClassroomService.insertFiles(element.location, Number(id_class))
+      .then((files) => {
+        if (files) {
+          filesSended.push(files);
+        } else {
+          res.status(404).send("Não foi possível inserir o arquivo!");
+        }
+      })
+      .catch((e) => res.status(500).send(e.message));
+  });
+
+  res.status(201).send(req.files);
+};
+
 const deleteClassroom = (req, res) => {
   ClassroomService.deleteClassroom(Number(req.params.id))
     .then((classroom) => {
@@ -83,4 +107,5 @@ module.exports = {
   saveClasroom,
   deleteClassroom,
   updateClassroom,
+  saveFiles,
 };

@@ -1,4 +1,6 @@
 const express = require("express");
+const multerConfig = require("../config/multerLibrary");
+const multer = require("multer");
 
 const Controller = require("../controllers/ClassroomController");
 
@@ -10,6 +12,15 @@ classroomRouter.get("/classes", async (req, res) =>
 
 classroomRouter.get("/classroom/:id", async (req, res) =>
   Controller.getClassroomById(req, res)
+);
+
+classroomRouter.post(
+  "/classes/files/add",
+  multer(multerConfig).array("files"),
+  async (req, res) => {
+    console.log("arquivos enviados: ", req.files);
+    Controller.saveFiles(req, res);
+  }
 );
 
 classroomRouter.post("/classroom/add", async (req, res) =>
