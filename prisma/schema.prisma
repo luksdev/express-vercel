@@ -68,7 +68,6 @@ model Comments {
   id_class   Int
   id_user    Int
   usersId    Int?
-  Users      Users?  @relation(fields: [usersId], references: [id])
 
   @@index([usersId], map: "comments_usersId_fkey")
   @@map("comments")
@@ -108,7 +107,6 @@ model Users {
   password   String
   role       Int        @default(0)
   job        String?
-  comments   Comments[]
 
   @@map("users")
 }
