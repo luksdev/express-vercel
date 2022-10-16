@@ -9,7 +9,7 @@ const getComment = async (id) => {
 };
 
 const getCommentsByClassId = async (id_class) => {
-  return await db.comments({
+  return await db.comments.findMany({
     where: {
       id_class,
     },

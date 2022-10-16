@@ -34,7 +34,7 @@ const deleteContent = async (id) => {
 };
 
 const updateContent = async (id, url) => {
-  return await db.comments.update({
+  return await db.library.update({
     where: {
       id,
     },
