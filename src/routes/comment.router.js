@@ -4,6 +4,10 @@ const Controller = require("../controllers/CommentsController");
 
 const comment = express.Router();
 
+comment.get("/comments", async (req, res) => {
+  Controller.getAllComments(req, res);
+});
+
 comment.get("/comment/:id", async (req, res) =>
   Controller.getComment(req, res)
 );

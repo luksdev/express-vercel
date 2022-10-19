@@ -1,5 +1,18 @@
 const CommentService = require("../services/comments.service");
 
+const getAllComments = (req, res) => {
+  CommentService.getAllComments()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving comments.",
+      });
+    });
+};
+
 const getComment = (req, res) => {
   const { id } = req.params;
 
@@ -29,6 +42,8 @@ const getCommentsByClassId = (req, res) => {
 
 const saveComment = (req, res) => {
   const { comment, date, id_class, id_user, id_comment, usersId } = req.body;
+
+  console.log(req.body);
 
   CommentService.createComment(
     comment,
@@ -83,4 +98,5 @@ module.exports = {
   saveComment,
   updateComment,
   deleteComment,
+  getAllComments,
 };

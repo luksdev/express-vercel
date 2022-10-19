@@ -1,5 +1,19 @@
 const db = require("../utils/db.server.js");
 
+const getAllComments = async () => {
+  return await db.comments.findMany({
+    select: {
+      id: true,
+      comment: true,
+      date: true,
+      id_comment: true,
+      id_class: true,
+      id_user: true,
+      usersId: true,
+    },
+  });
+};
+
 const getComment = async (id) => {
   return await db.comments.findUnique({
     where: {
@@ -62,4 +76,5 @@ module.exports = {
   createComment,
   updateComment,
   deleteComment,
+  getAllComments,
 };
