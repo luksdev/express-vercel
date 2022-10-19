@@ -30,7 +30,7 @@ const getCourseById = (req, res) => {
 };
 
 const saveCourse = (req, res) => {
-  const { title, cover_image, description, id_category, id_instructor } =
+  const { title, cover_image, description, id_category, id_instructor, subject } =
     req.body;
 
   CourseService.createCourse(
@@ -49,6 +49,19 @@ const saveCourse = (req, res) => {
     })
     .catch((e) => res.status(500).send(e.message));
 };
+
+const saveCousreSubjects = (req, res) => {
+  const { id_course, subject } = req.body
+  CourseService.updateSubject(id_course, subject)
+  .then((course) => {
+    if(course){
+      res.status(200).send(course)
+    }else{
+      res.status(404).send("Course not found")
+    }
+  })
+  .catch((e) => res.status(500).send(e.message));
+}
 
 const saveCourseImg = (req, res) => {
   const { id_course } = req.body;
@@ -109,4 +122,5 @@ module.exports = {
   deleteCourse,
   updateCourse,
   saveCourseImg,
+  saveCousreSubjects
 };

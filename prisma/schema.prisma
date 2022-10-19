@@ -30,7 +30,7 @@ model Courses {
   description   String
   id_category   Int
   id_instructor Int
-
+  subject       String
   @@map("courses")
 }
 

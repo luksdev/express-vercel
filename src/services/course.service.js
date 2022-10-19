@@ -10,6 +10,7 @@ const listCourses = async () => {
       description: true,
       id_category: true,
       id_instructor: true,
+      subject:  true
     },
   });
 };
@@ -83,6 +84,17 @@ const updateCourse = async (
   });
 };
 
+const updateSubject = async (id, subject) => {
+  return await db.courses.update({
+    where: {
+      id,
+    }, 
+    data: {
+      subject
+    }
+  })
+}
+
 module.exports = {
   listCourses,
   getCourse,
@@ -90,4 +102,5 @@ module.exports = {
   deleteCourse,
   updateCourse,
   insertImg,
+  updateSubject
 };

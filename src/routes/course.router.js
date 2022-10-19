@@ -34,4 +34,7 @@ courseRouter.put("/course/update/:id", async (req, res) =>
   Controller.updateCourse(req, res)
 );
 
+courseRouter.put("/course/setSubject", async (req, res) =>
+  Controller.saveCousreSubjects(req, res)
+);
 module.exports = courseRouter;
