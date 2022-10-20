@@ -10,7 +10,7 @@ const listCourses = async () => {
       description: true,
       id_category: true,
       id_instructor: true,
-      subject:  true
+      subject: true,
     },
   });
 };
@@ -28,7 +28,8 @@ const createCourse = async (
   cover_image,
   description,
   id_category,
-  id_instructor
+  id_instructor,
+  subject
 ) => {
   return await db.courses.create({
     data: {
@@ -37,6 +38,7 @@ const createCourse = async (
       description,
       id_category,
       id_instructor,
+      subject,
     },
   });
 };
@@ -88,12 +90,12 @@ const updateSubject = async (id, subject) => {
   return await db.courses.update({
     where: {
       id,
-    }, 
+    },
     data: {
-      subject
-    }
-  })
-}
+      subject,
+    },
+  });
+};
 
 module.exports = {
   listCourses,
@@ -102,5 +104,5 @@ module.exports = {
   deleteCourse,
   updateCourse,
   insertImg,
-  updateSubject
+  updateSubject,
 };
