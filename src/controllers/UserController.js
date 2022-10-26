@@ -1,4 +1,7 @@
 const UserService = require("../services/user.service.js");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("../config/auth.js");
 // const prima = require("@prisma/client");
 
 const getUser = (req, res) => {
@@ -28,15 +31,31 @@ const getUserById = (req, res) => {
 };
 
 const signin = (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
   UserService.loginUser(email)
     .then((user) => {
-      if (user) {
-        res.status(200).send(user);
-      } else {
-        res.status(404).send("User not found");
-      }
+      if (!user) res.status(404).send("User not found");
+
+      if (!password) return res.status(404).send("Password is required!");
+
+      const isValid = bcrypt.compareSync(password, user.password);
+
+      if (!isValid) return res.status(401).send("Password is incorrect!");
+
+      return res.status(200).json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          identifier: user.identifier,
+          job: user.job,
+        },
+        token: jwt.sign({ id: user.id }, config.secret, {
+          expiresIn: config.expiresIn,
+        }),
+      });
     })
     .catch((e) => res.status(500).send(e.message));
 };
@@ -44,7 +63,10 @@ const signin = (req, res) => {
 const signup = (req, res) => {
   const { name, email, role, identifier, password, job } = req.body;
 
-  UserService.createUser(name, email, role, identifier, password, job)
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+
+  UserService.createUser(name, email, role, identifier, hash, job)
     .then((user) => {
       if (user) {
         res.status(201).send(user);
