@@ -1,12 +1,13 @@
 const express = require("express");
 
 const Controller = require("../controllers/UserController.js");
+const AuthMiddleware = require("../middlewares/AuthMiddleware.js");
 
 const userRouter = express.Router();
 
 userRouter.get("/users", async (req, res) => Controller.getUser(req, res));
 
-userRouter.get("/user/:id", async (req, res) =>
+userRouter.get("/me", AuthMiddleware, async (req, res) =>
   Controller.getUserById(req, res)
 );
 

@@ -11,6 +11,7 @@ const courseRouter = require("./src/routes/course.router.js");
 const moduleRouter = require("./src/routes/module.router.js");
 const instructorRouter = require("./src/routes/instructor.router");
 const commentRouter = require("./src/routes/comment.router");
+const jwtRouter = require("./src/routes/jwt.router");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -27,6 +28,7 @@ app.use("/", courseRouter);
 app.use("/", moduleRouter);
 app.use("/", instructorRouter);
 app.use("/", commentRouter);
+// app.use("/", jwtRouter);
 
 app.listen(3001, () => {
   console.log("Server started on port 3000");

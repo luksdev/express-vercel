@@ -17,9 +17,7 @@ const getUser = (req, res) => {
 };
 
 const getUserById = (req, res) => {
-  const { id } = req.params;
-
-  UserService.getUser(Number(id))
+  UserService.getUser(Number(req.userId))
     .then((user) => {
       if (user) {
         res.status(200).send(user);
