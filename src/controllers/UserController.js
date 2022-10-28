@@ -88,9 +88,10 @@ const deleteUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const { name, email, role, identifier, password, job } = req.body;
+  const { name, email, role, identifier, password: pass, job } = req.body;
 
-  console.warn(req.body);
+  const salt = bcrypt.genSaltSync(10);
+  const password = bcrypt.hashSync(pass, salt);
 
   UserService.updateUser(
     Number(req.params.id),
