@@ -9,6 +9,7 @@ const listClasses = async () => {
       description: true,
       url_video: true,
       id_module: true,
+      duration: true,
     },
   });
 };
