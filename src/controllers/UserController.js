@@ -90,6 +90,8 @@ const deleteUser = (req, res) => {
 const updateUser = (req, res) => {
   const { name, email, role, identifier, password, job } = req.body;
 
+  console.warn(req.body);
+
   UserService.updateUser(
     Number(req.params.id),
     name,

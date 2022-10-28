@@ -55,6 +55,8 @@ const deleteUser = async (id) => {
 };
 
 const updateUser = async (id, name, email, job, role, identifier, password) => {
+  console.warn(id, name, email, job, role, identifier, password);
+
   return await db.users.update({
     where: {
       id,
@@ -62,8 +64,8 @@ const updateUser = async (id, name, email, job, role, identifier, password) => {
     data: {
       name,
       email,
-      role,
-      job,
+      role: job,
+      job: role,
       identifier,
       password,
     },
