@@ -21,13 +21,20 @@ const getClassroom = async (id) => {
   });
 };
 
-const createClassroom = async (title, description, url_video, id_module) => {
+const createClassroom = async (
+  title,
+  description,
+  url_video,
+  id_module,
+  duration
+) => {
   return await db.classes.create({
     data: {
       title,
       description,
       url_video,
-      id_module,
+      id_module: duration,
+      duration: id_module,
     },
   });
 };

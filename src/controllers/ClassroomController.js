@@ -1,4 +1,7 @@
 const ClassroomService = require("../services/classroom.service.js");
+// const ffmpeg = require("ffmpeg");
+var ffmpeg = require("fluent-ffmpeg");
+const fs = require("fs");
 
 const getClassroom = (req, res) => {
   ClassroomService.listClasses()
@@ -29,20 +32,51 @@ const getClassroomById = (req, res) => {
 const saveClasroom = (req, res) => {
   const { title, description, url_video, id_module } = req.body;
 
-  ClassroomService.createClassroom(
-    title,
-    description,
-    url_video,
-    Number(id_module)
-  )
-    .then((classroom) => {
-      if (classroom) {
-        res.status(201).send(classroom);
-      } else {
-        res.status(404).send("Não foi possível criar o aula!");
-      }
-    })
-    .catch((e) => res.status(500).send(e.message));
+  console.log(url_video);
+
+  ffmpeg.ffprobe(url_video, function (err, metadata) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      const duration = metadata["format"]["duration"];
+
+      console.log(duration);
+
+      ClassroomService.createClassroom(
+        title,
+        description,
+        url_video,
+        duration,
+        Number(id_module)
+      )
+        .then((classroom) => {
+          if (classroom) {
+            res.status(201).send({
+              message: "Classroom created successfully",
+              classroom,
+            });
+          } else {
+            res.status(404).send("Não foi possível criar o aula!");
+          }
+        })
+        .catch((e) => res.status(500).send(e.message));
+    }
+  });
+
+  // ClassroomService.createClassroom(
+  //   title,
+  //   description,
+  //   url_video,
+  //   Number(id_module)
+  // )
+  //   .then((classroom) => {
+  //     if (classroom) {
+  //       res.status(201).send({});
+  //     } else {
+  //       res.status(404).send("Não foi possível criar o aula!");
+  //     }
+  //   })
+  //   .catch((e) => res.status(500).send(e.message));
 };
 
 const saveFiles = (req, res) => {

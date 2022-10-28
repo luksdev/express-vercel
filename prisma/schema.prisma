@@ -48,6 +48,7 @@ model Classes {
   description String
   url_video   String
   id_module   Int
+  duration    Float
 
   @@map("classes")
 }
