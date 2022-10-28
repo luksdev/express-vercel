@@ -54,7 +54,7 @@ const deleteUser = async (id) => {
   });
 };
 
-const updateUser = async (id, name, email, role, identifier, password) => {
+const updateUser = async (id, name, email, job, role, identifier, password) => {
   return await db.users.update({
     where: {
       id,
@@ -63,6 +63,7 @@ const updateUser = async (id, name, email, role, identifier, password) => {
       name,
       email,
       role,
+      job,
       identifier,
       password,
     },
