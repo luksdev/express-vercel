@@ -88,13 +88,14 @@ const deleteUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const { name, email, role, identifier, password } = req.body;
+  const { name, email, role, identifier, password, job } = req.body;
 
   UserService.updateUser(
     Number(req.params.id),
     name,
     email,
     role,
+    job,
     identifier,
     password
   )
