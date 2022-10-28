@@ -38,13 +38,23 @@ const createComment = async (
   id_user,
   usersId
 ) => {
+  console.log(
+    "Service: ",
+    comment,
+    date,
+    id_comment,
+    id_class,
+    id_user,
+    usersId
+  );
+
   return await db.comments.create({
     data: {
       comment,
       date,
-      id_comment,
-      id_class,
-      id_user,
+      id_comment: id_user,
+      id_class: id_comment,
+      id_user: id_class,
       usersId,
     },
   });
