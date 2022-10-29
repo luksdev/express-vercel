@@ -31,6 +31,7 @@ model Courses {
   id_category   Int
   id_instructor Int
   subject       String
+
   @@map("courses")
 }
 
@@ -99,14 +100,14 @@ model ImagesInstructors {
 }
 
 model Users {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  email      String     @unique
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  email      String   @unique
   name       String
-  identifier String     @unique
+  identifier String   @unique
   password   String
-  role       Int        @default(0)
+  role       Int      @default(0)
   job        String?
 
   @@map("users")
