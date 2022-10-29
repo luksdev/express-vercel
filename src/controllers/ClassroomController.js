@@ -1,8 +1,10 @@
 const ClassroomService = require("../services/classroom.service.js");
 // const ffmpeg = require("ffmpeg");
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
-var ffmpeg = require("fluent-ffmpeg");
+const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+
+const ffprob = require("ffprobe");
 const fs = require("fs");
 
 const getClassroom = (req, res) => {
@@ -52,6 +54,22 @@ const saveClasroom = (req, res) => {
     .then((metadata) => {
       const duration = metadata.format.duration;
       console.log(duration);
+
+      ClassroomService.createClassroom(
+        title,
+        description,
+        url_video,
+        duration,
+        Number(id_module)
+      )
+        .then((classroom) => {
+          if (classroom) {
+            res.status(200).send(classroom);
+          } else {
+            res.status(404).send("Clasroom not created");
+          }
+        })
+        .catch((e) => res.status(500).send(e.message));
     })
     .catch((e) =>
       res.status(500).send({
