@@ -36,11 +36,14 @@ const saveClasroom = (req, res) => {
 
   ffmpeg.ffprobe(url_video, function (err, metadata) {
     if (err) {
+      console.log("Entrou no error do ffprobe");
       res.status(500).send(err);
     } else {
+      console.log("Entrou no else - Indo bem!");
       const duration = metadata["format"]["duration"];
 
       console.log(duration);
+      console.log("Pegou a duracao");
 
       ClassroomService.createClassroom(
         title,
