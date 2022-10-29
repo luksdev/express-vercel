@@ -1,6 +1,8 @@
 const ClassroomService = require("../services/classroom.service.js");
 // const ffmpeg = require("ffmpeg");
+const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 var ffmpeg = require("fluent-ffmpeg");
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 const fs = require("fs");
 
 const getClassroom = (req, res) => {
@@ -34,37 +36,61 @@ const saveClasroom = (req, res) => {
 
   console.log(url_video);
 
-  ffmpeg.ffprobe(url_video, function (err, metadata) {
-    if (err) {
-      console.log("Entrou no error do ffprobe");
-      res.status(500).send(err);
-    } else {
-      console.log("Entrou no else - Indo bem!");
-      const duration = metadata["format"]["duration"];
+  function getMetadata(url_video) {
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(url_video, function (err, metadata) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(metadata);
+        }
+      });
+    });
+  }
 
+  getMetadata(url_video)
+    .then((metadata) => {
+      const duration = metadata.format.duration;
       console.log(duration);
-      console.log("Pegou a duracao");
+    })
+    .catch((e) =>
+      res.status(500).send({
+        message: e.message,
+        dev: "Erro ao obter duração do vídeo",
+      })
+    );
 
-      ClassroomService.createClassroom(
-        title,
-        description,
-        url_video,
-        duration,
-        Number(id_module)
-      )
-        .then((classroom) => {
-          if (classroom) {
-            res.status(201).send({
-              message: "Classroom created successfully",
-              classroom,
-            });
-          } else {
-            res.status(404).send("Não foi possível criar o aula!");
-          }
-        })
-        .catch((e) => res.status(500).send(e.message));
-    }
-  });
+  // ffmpeg.ffprobe(url_video, function (err, metadata) {
+  //   if (err) {
+  //     console.log("Entrou no error do ffprobe");
+  //     res.status(500).send(err);
+  //   } else {
+  //     console.log("Entrou no else - Indo bem!");
+  //     const duration = metadata["format"]["duration"];
+
+  //     console.log(duration);
+  //     console.log("Pegou a duracao");
+
+  //     ClassroomService.createClassroom(
+  //       title,
+  //       description,
+  //       url_video,
+  //       duration,
+  //       Number(id_module)
+  //     )
+  //       .then((classroom) => {
+  //         if (classroom) {
+  //           res.status(201).send({
+  //             message: "Classroom created successfully",
+  //             classroom,
+  //           });
+  //         } else {
+  //           res.status(404).send("Não foi possível criar o aula!");
+  //         }
+  //       })
+  //       .catch((e) => res.status(500).send(e.message));
+  //   }
+  // });
 
   // ClassroomService.createClassroom(
   //   title,
