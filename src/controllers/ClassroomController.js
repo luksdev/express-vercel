@@ -38,7 +38,13 @@ const saveClasroom = (req, res) => {
 
   const process = new ffmpeg(url_video);
 
-  console.log("Erro aqui: ", process.ffprobe);
+  console.log(
+    "Erro aqui: ",
+    process.ffprobe(url_video, function (err, data) {
+      console.log("Erro aqui: ", err);
+      console.log("Erro aqui: ", data);
+    })
+  );
 
   process.ffprobe((err, data) => {
     console.log("Erro aqui funcao ffprobe: ", err);
@@ -51,7 +57,7 @@ const saveClasroom = (req, res) => {
 
   function getMetadata(url_video) {
     return new Promise((resolve, reject) => {
-      console.log("Erro aqui no promise: ", process.ffprobe);
+      console.log("Erro aqui no promise: ", resolve, reject);
       process.ffprobe(url_video, function (err, metadata) {
         if (err) {
           reject(err);
