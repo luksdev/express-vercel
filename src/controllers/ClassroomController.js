@@ -1,12 +1,8 @@
 const ClassroomService = require("../services/classroom.service.js");
 // const ffmpeg = require("ffmpeg");
-const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffmpeg = require("fluent-ffmpeg");
 
 // ffmpeg.setFfmpegPath(ffmpegInstaller.path);
-
-const ffprob = require("ffprobe");
-const fs = require("fs");
 
 const getClassroom = (req, res) => {
   ClassroomService.listClasses()

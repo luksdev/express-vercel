@@ -1242,6 +1242,11 @@
   dependencies:
     "when" ">= 0.0.1"
 
+"ffprobe-static@^3.1.0":
+  "integrity" "sha512-Dvpa9uhVMOYivhHKWLGDoa512J751qN1WZAIO+Xw4L/mrUSPxS4DApzSUDbCFE/LUq2+xYnznEahTd63AqBSpA=="
+  "resolved" "https://registry.npmjs.org/ffprobe-static/-/ffprobe-static-3.1.0.tgz"
+  "version" "3.1.0"
+
 "ffprobe@^1.1.2":
   "integrity" "sha512-a+oTbhyeM7Z8PRy+mpzmVUAnATZT7z4BO94HSKeqHupdmjiKZ1djzcZkyoyXA21zCOCG7oVRrsBMmvvtmzoz4g=="
   "resolved" "https://registry.npmjs.org/ffprobe/-/ffprobe-1.1.2.tgz"
