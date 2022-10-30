@@ -30,6 +30,6 @@ app.use("/", instructorRouter);
 app.use("/", commentRouter);
 // app.use("/", jwtRouter);
 
-app.listen(3001, () => {
+app.listen(3002, () => {
   console.log("Server started on port 3000");
 });

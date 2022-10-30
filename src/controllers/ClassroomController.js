@@ -1,6 +1,7 @@
 const ClassroomService = require("../services/classroom.service.js");
 // const ffmpeg = require("ffmpeg");
 const ffmpeg = require("fluent-ffmpeg");
+var ffprobe = require("ffprobe");
 
 // ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
@@ -33,17 +34,43 @@ const getClassroomById = (req, res) => {
 const saveClasroom = (req, res) => {
   const { title, description, url_video, id_module } = req.body;
 
-  console.log(url_video);
+  // capturar meta dados a partir do ffprobe stream do video
+
+  const process = new ffmpeg(url_video);
+
+  console.log(process);
+
+  process.ffprobe((err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(data);
+    }
+  });
 
   function getMetadata(url_video) {
     return new Promise((resolve, reject) => {
-      ffmpeg.ffprobe(url_video, function (err, metadata) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(metadata);
+      ffprobe(
+        url_video,
+        [
+          "-v",
+          "quiet",
+          "-print_format",
+          "json",
+          "-show_format",
+          "-show_streams",
+          // configurar para pegar meta dados pela url
+
+          "-i",
+        ],
+        function (err, metadata) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(metadata);
+          }
         }
-      });
+      );
     });
   }
 
