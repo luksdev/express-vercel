@@ -32,69 +32,23 @@ const getClassroomById = (req, res) => {
 };
 
 const saveClasroom = (req, res) => {
-  const { title, description, url_video, id_module } = req.body;
+  const { title, description, url_video, id_module, duration } = req.body;
 
-  // capturar meta dados a partir do ffprobe stream do video
-
-  const process = new ffmpeg(url_video);
-
-  console.log(
-    "Erro aqui: ",
-    process.ffprobe(url_video, function (err, data) {
-      console.log("Erro aqui: ", err);
-      console.log("Erro aqui: ", data);
+  ClassroomService.createClassroom(
+    title,
+    description,
+    url_video,
+    duration,
+    Number(id_module)
+  )
+    .then((classroom) => {
+      if (classroom) {
+        res.status(200).send(classroom);
+      } else {
+        res.status(404).send("Clasroom not created");
+      }
     })
-  );
-
-  process.ffprobe((err, data) => {
-    console.log("Erro aqui funcao ffprobe: ", err);
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(data);
-    }
-  });
-
-  function getMetadata(url_video) {
-    return new Promise((resolve, reject) => {
-      console.log("Erro aqui no promise: ", resolve, reject);
-      process.ffprobe(url_video, function (err, metadata) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(metadata);
-        }
-      });
-    });
-  }
-
-  getMetadata(url_video)
-    .then((metadata) => {
-      const duration = metadata.format.duration;
-      console.log(duration);
-
-      ClassroomService.createClassroom(
-        title,
-        description,
-        url_video,
-        duration,
-        Number(id_module)
-      )
-        .then((classroom) => {
-          if (classroom) {
-            res.status(200).send(classroom);
-          } else {
-            res.status(404).send("Clasroom not created");
-          }
-        })
-        .catch((e) => res.status(500).send(e.message));
-    })
-    .catch((e) =>
-      res.status(500).send({
-        message: e.message,
-        dev: "Erro ao obter duração do vídeo",
-      })
-    );
+    .catch((e) => res.status(500).send(e.message));
 };
 
 const saveFiles = (req, res) => {
