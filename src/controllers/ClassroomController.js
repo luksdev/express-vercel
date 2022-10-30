@@ -74,53 +74,6 @@ const saveClasroom = (req, res) => {
         dev: "Erro ao obter duração do vídeo",
       })
     );
-
-  // ffmpeg.ffprobe(url_video, function (err, metadata) {
-  //   if (err) {
-  //     console.log("Entrou no error do ffprobe");
-  //     res.status(500).send(err);
-  //   } else {
-  //     console.log("Entrou no else - Indo bem!");
-  //     const duration = metadata["format"]["duration"];
-
-  //     console.log(duration);
-  //     console.log("Pegou a duracao");
-
-  //     ClassroomService.createClassroom(
-  //       title,
-  //       description,
-  //       url_video,
-  //       duration,
-  //       Number(id_module)
-  //     )
-  //       .then((classroom) => {
-  //         if (classroom) {
-  //           res.status(201).send({
-  //             message: "Classroom created successfully",
-  //             classroom,
-  //           });
-  //         } else {
-  //           res.status(404).send("Não foi possível criar o aula!");
-  //         }
-  //       })
-  //       .catch((e) => res.status(500).send(e.message));
-  //   }
-  // });
-
-  // ClassroomService.createClassroom(
-  //   title,
-  //   description,
-  //   url_video,
-  //   Number(id_module)
-  // )
-  //   .then((classroom) => {
-  //     if (classroom) {
-  //       res.status(201).send({});
-  //     } else {
-  //       res.status(404).send("Não foi possível criar o aula!");
-  //     }
-  //   })
-  //   .catch((e) => res.status(500).send(e.message));
 };
 
 const saveFiles = (req, res) => {
