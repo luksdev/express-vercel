@@ -38,7 +38,7 @@ const saveClasroom = (req, res) => {
 
   const process = new ffmpeg(url_video);
 
-  console.log(process);
+  console.log(process.ffprobe);
 
   process.ffprobe((err, data) => {
     if (err) {
@@ -50,27 +50,13 @@ const saveClasroom = (req, res) => {
 
   function getMetadata(url_video) {
     return new Promise((resolve, reject) => {
-      ffprobe(
-        url_video,
-        [
-          "-v",
-          "quiet",
-          "-print_format",
-          "json",
-          "-show_format",
-          "-show_streams",
-          // configurar para pegar meta dados pela url
-
-          "-i",
-        ],
-        function (err, metadata) {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(metadata);
-          }
+      process.ffprobe(url_video, function (err, metadata) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(metadata);
         }
-      );
+      });
     });
   }
 
