@@ -11,6 +11,10 @@ userRouter.get("/me", AuthMiddleware, async (req, res) =>
   Controller.getUserById(req, res)
 );
 
+userRouter.get("/user/:id", async (req, res) => 
+  Controller.getUserByIdWithoutJWT(req, res)
+)
+
 userRouter.post("/user/add", async (req, res) => Controller.signup(req, res));
 
 userRouter.delete("/user/delete/:id", async (req, res) =>

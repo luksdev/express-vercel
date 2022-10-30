@@ -28,6 +28,20 @@ const getUserById = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
+const getUserByIdWithoutJWT = (req, res) => {
+  const { id } = req.params;
+
+  UserService.getUser(Number(id))
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send("User not found");
+      }
+    })
+    .catch((e) => res.status(500).send(e.message));
+};
+
 const signin = (req, res) => {
   const { email, password } = req.body;
 
@@ -119,4 +133,5 @@ module.exports = {
   signup,
   deleteUser,
   updateUser,
+  getUserByIdWithoutJWT
 };
