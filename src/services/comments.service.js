@@ -5,11 +5,10 @@ const getAllComments = async () => {
     select: {
       id: true,
       comment: true,
-      date: true,
-      id_comment: true,
+      createdAt: true,
       id_class: true,
       id_user: true,
-      usersId: true,
+      user: true,
     },
   });
 };
