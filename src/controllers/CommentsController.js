@@ -41,17 +41,29 @@ const getCommentsByClassId = (req, res) => {
 };
 
 const saveComment = (req, res) => {
-  const { comment, date, id_class, id_user, id_comment, usersId } = req.body;
+  const { comment, id_class, id_user } = req.body;
 
   console.log(req.body);
 
-  CommentService.createComment(
-    comment,
-    date,
-    Number(id_class),
-    Number(id_user),
-    Number(id_comment),
-    Number(usersId)
+  CommentService.createComment(comment, Number(id_class), Number(id_user))
+    .then((comment) => {
+      if (comment) {
+        res.status(201).send(comment);
+      } else {
+        res.status(404).send("Não foi possível salvar o comentario");
+      }
+    })
+    .catch((e) => res.status(500).send(e.message));
+};
+
+const saveCommentReply = (req, res) => {
+  const { comment_reply, id_comment, id_user, is_reply } = req.body;
+
+  CommentService.createCommentReply(
+    comment_reply,
+    id_comment,
+    id_user,
+    is_reply
   )
     .then((comment) => {
       if (comment) {
@@ -99,4 +111,5 @@ module.exports = {
   updateComment,
   deleteComment,
   getAllComments,
+  saveCommentReply,
 };

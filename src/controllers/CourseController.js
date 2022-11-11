@@ -51,7 +51,10 @@ const saveCourse = (req, res) => {
   )
     .then((course) => {
       if (course) {
-        res.status(201).send(course);
+        res.status(201).send({
+          message: "Curso criado com sucesso!",
+          course,
+        });
       } else {
         res.status(404).send("Não foi possível criar o curso!");
       }

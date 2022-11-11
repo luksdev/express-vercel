@@ -27,35 +27,44 @@ const getCommentsByClassId = async (id_class) => {
     where: {
       id_class,
     },
+    include: {
+      _count: true,
+      user: true,
+      Comments_reply: {
+        select: {
+          user: true,
+          comment_reply: true,
+          is_reply: true,
+        },
+      },
+    },
   });
 };
 
-const createComment = async (
-  comment,
-  date,
-  id_comment,
-  id_class,
-  id_user,
-  usersId
-) => {
-  console.log(
-    "Service: ",
-    comment,
-    date,
-    id_comment,
-    id_class,
-    id_user,
-    usersId
-  );
+const createComment = async (comment, id_class, id_user) => {
+  console.log("Service: ", comment, id_class, id_user);
 
   return await db.comments.create({
     data: {
       comment,
-      date,
-      id_comment: id_user,
-      id_class: id_comment,
-      id_user: id_class,
-      usersId,
+      id_class,
+      id_user,
+    },
+  });
+};
+
+const createCommentReply = async (
+  comment_reply,
+  id_comment,
+  id_user,
+  is_reply
+) => {
+  return await db.comments_reply.create({
+    data: {
+      comment_reply,
+      id_comment,
+      id_user,
+      is_reply,
     },
   });
 };
@@ -87,4 +96,5 @@ module.exports = {
   updateComment,
   deleteComment,
   getAllComments,
+  createCommentReply,
 };

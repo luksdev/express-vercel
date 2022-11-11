@@ -20,6 +20,10 @@ comment.post("/comment/add", async (req, res) =>
   Controller.saveComment(req, res)
 );
 
+comment.post("/comment_reply/add", async (req, res) =>
+  Controller.saveCommentReply(req, res)
+);
+
 comment.delete("/comment/delete/:id", async (req, res) =>
   Controller.deleteComment(req, res)
 );

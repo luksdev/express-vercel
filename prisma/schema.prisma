@@ -20,6 +20,8 @@ model Instructors {
   description   String
   image_profile String
 
+  Courses Courses[]
+
   @@map("instructors")
 }
 
@@ -32,6 +34,11 @@ model Courses {
   id_instructor Int
   subject       String
 
+  // Relations
+  instructor Instructors @relation(fields: [id_instructor], references: [id])
+
+  modules Modules[]
+
   @@map("courses")
 }
 
@@ -39,6 +46,10 @@ model Modules {
   id        Int    @id @default(autoincrement())
   name      String
   id_course Int
+
+  // Relations
+  course  Courses   @relation(fields: [id_course], references: [id])
+  classes Classes[]
 
   @@map("modules")
 }
@@ -51,6 +62,11 @@ model Classes {
   id_module   Int
   duration    Float
 
+  // Relations
+  module   Modules    @relation(fields: [id_module], references: [id])
+  comments Comments[]
+  library  Library[]
+
   @@map("classes")
 }
 
@@ -59,20 +75,40 @@ model Library {
   url      String
   id_class Int
 
+  // Relations
+  class Classes @relation(fields: [id_class], references: [id])
+
   @@map("library")
 }
 
 model Comments {
-  id         Int     @id @default(autoincrement())
-  comment    String
-  date       String?
-  id_comment Int?
-  id_class   Int
-  id_user    Int
-  usersId    Int?
+  id        Int      @id @default(autoincrement())
+  comment   String
+  createdAt DateTime @default(now())
+  id_class  Int
+  id_user   Int
 
-  @@index([usersId], map: "comments_usersId_fkey")
+  // Relations
+  // adicionar comentario na classe que esteja relacionada ao modulo
+  class          Classes          @relation(fields: [id_class], references: [id])
+  user           Users            @relation(fields: [id_user], references: [id])
+  Comments_reply Comments_reply[]
+
   @@map("comments")
+}
+
+model Comments_reply {
+  id            Int     @id @default(autoincrement())
+  comment_reply String
+  id_comment    Int
+  id_user       Int
+  is_reply      Boolean @default(false)
+
+  // Relations
+  comment Comments @relation(fields: [id_comment], references: [id])
+  user    Users    @relation(fields: [id_user], references: [id])
+
+  @@map("comments_reply")
 }
 
 model ImagesCourses {
@@ -109,6 +145,9 @@ model Users {
   password   String
   role       Int      @default(0)
   job        String?
+
+  comments       Comments[]
+  Comments_reply Comments_reply[]
 
   @@map("users")
 }

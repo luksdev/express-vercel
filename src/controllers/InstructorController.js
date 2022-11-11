@@ -35,7 +35,10 @@ const saveInstructor = (req, res) => {
   InstructorService.createInstructor(name, description, image_profile)
     .then((instructor) => {
       if (instructor) {
-        res.status(201).send(instructor);
+        res.status(201).send({
+          message: "Instructor created successfully",
+          instructor,
+        });
       } else {
         res.status(404).send("Não foi possível adicionar o instrutor!");
       }
