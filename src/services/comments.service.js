@@ -9,6 +9,19 @@ const getAllComments = async () => {
       id_class: true,
       id_user: true,
       user: true,
+      class: {
+        select: {
+          module: {
+            select: {
+              course: {
+                select: {
+                  title: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 };
@@ -29,6 +42,19 @@ const getCommentsByClassId = async (id_class) => {
     include: {
       _count: true,
       user: true,
+      class: {
+        select: {
+          module: {
+            select: {
+              course: {
+                select: {
+                  title: true,
+                },
+              },
+            },
+          },
+        },
+      },
       Comments_reply: {
         select: {
           user: true,

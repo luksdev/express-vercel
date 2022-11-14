@@ -2,7 +2,25 @@
 const db = require("../utils/db.server.js");
 
 const listCourses = async () => {
-  return await db.courses.findMany();
+  return await db.courses.findMany({
+    include: {
+      instructor: true,
+      modules: {
+        include: {
+          _count: true,
+          classes: {
+            include: {
+              comments: {
+                include: {
+                  user: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
 };
 
 const getCourse = async (id) => {
