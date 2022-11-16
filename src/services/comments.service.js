@@ -9,6 +9,7 @@ const getAllComments = async () => {
       id_class: true,
       id_user: true,
       user: true,
+      Comments_reply: true,
       class: {
         select: {
           module: {
