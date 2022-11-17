@@ -88,14 +88,15 @@ const deleteClassroom = (req, res) => {
 };
 
 const updateClassroom = (req, res) => {
-  const { title, description, url_video, id_module } = req.body;
+  const { title, description, url_video, id_module, is_finished } = req.body;
 
   ClassroomService.updateClassroom(
     Number(req.params.id),
     title,
     description,
     url_video,
-    Number(id_module)
+    Number(id_module),
+    is_finished
   )
     .then((classroom) => {
       if (classroom) {

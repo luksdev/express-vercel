@@ -101,6 +101,36 @@ const deleteUser = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
+const insertUserToCourse = (req, res) => {
+  const { user_id, course_id } = req.params;
+
+  UserService.insertUserToCourse(Number(user_id), Number(course_id))
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send("User not found");
+      }
+    })
+    .catch((e) => res.status(500).send(e.message));
+};
+
+const updateClass = (req, res) => {
+  const { user_id, id_module, id_user } = req.params;
+
+  console.log(id, id_module, id_user);
+
+  UserService.updateClass(Number(id), Number(id_module), Number(id_user))
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send("User not found");
+      }
+    })
+    .catch((e) => res.status(500).send(e.message));
+};
+
 const updateUser = (req, res) => {
   const { name, email, role, identifier, password: pass, job } = req.body;
 
@@ -133,5 +163,7 @@ module.exports = {
   signup,
   deleteUser,
   updateUser,
-  getUserByIdWithoutJWT
+  getUserByIdWithoutJWT,
+  insertUserToCourse,
+  updateClass,
 };

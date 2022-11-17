@@ -10,6 +10,7 @@ const listClasses = async () => {
       url_video: true,
       id_module: true,
       duration: true,
+      is_finished: true,
     },
   });
 };
@@ -62,7 +63,8 @@ const updateClassroom = async (
   title,
   description,
   url_video,
-  id_module
+  id_module,
+  is_finished
 ) => {
   return await db.classes.update({
     where: {
@@ -73,6 +75,7 @@ const updateClassroom = async (
       description,
       url_video,
       id_module,
+      is_finished,
     },
   });
 };

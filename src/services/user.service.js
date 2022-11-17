@@ -12,6 +12,20 @@ const listUsers = async () => {
       identifier: true,
       createdAt: true,
       updatedAt: true,
+      startedCourses: {
+        select: {
+          createdAt: true,
+          course: {
+            select: {
+              modules: {
+                select: {
+                  classes: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 };
@@ -42,6 +56,30 @@ const createUser = async (name, email, role, identifier, password, job) => {
       identifier,
       password,
       job,
+    },
+  });
+};
+
+const insertUserToCourse = async (userId, courseId) => {
+  return await db.startedCourses.create({
+    data: {
+      id_user: userId,
+      id_course: courseId,
+    },
+  });
+};
+
+// atualizar is_finished para true que esta na tabela classes
+const updateClass = async (id, id_module, id_user) => {
+  return await db.classes.update({
+    // Quando id_module for igual ao id_module do parametro
+    where: {
+      id_user,
+      id_module,
+      id,
+    },
+    data: {
+      is_finished: true,
     },
   });
 };
@@ -79,4 +117,6 @@ module.exports = {
   createUser,
   deleteUser,
   updateUser,
+  insertUserToCourse,
+  updateClass,
 };

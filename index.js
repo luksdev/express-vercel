@@ -12,6 +12,7 @@ const moduleRouter = require("./src/routes/module.router.js");
 const instructorRouter = require("./src/routes/instructor.router");
 const commentRouter = require("./src/routes/comment.router");
 const jwtRouter = require("./src/routes/jwt.router");
+const ratingRouter = require("./src/routes/rating.router.js");
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -28,6 +29,7 @@ app.use("/", courseRouter);
 app.use("/", moduleRouter);
 app.use("/", instructorRouter);
 app.use("/", commentRouter);
+app.use("/", ratingRouter);
 // app.use("/", jwtRouter);
 
 app.listen(3002, () => {

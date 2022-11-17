@@ -11,9 +11,9 @@ userRouter.get("/me", AuthMiddleware, async (req, res) =>
   Controller.getUserById(req, res)
 );
 
-userRouter.get("/user/:id", async (req, res) => 
+userRouter.get("/user/:id", async (req, res) =>
   Controller.getUserByIdWithoutJWT(req, res)
-)
+);
 
 userRouter.post("/user/add", async (req, res) => Controller.signup(req, res));
 
@@ -23,6 +23,15 @@ userRouter.delete("/user/delete/:id", async (req, res) =>
 
 userRouter.put("/user/update/:id", async (req, res) =>
   Controller.updateUser(req, res)
+);
+
+userRouter.post("/user/:user_id/insertCourse/:course_id", async (req, res) =>
+  Controller.insertUserToCourse(req, res)
+);
+
+userRouter.post(
+  "/user/:user_id/module/:module_id/class/:class_id",
+  async (req, res) => Controller.updateClass(req, res)
 );
 
 userRouter.post("/user/login", async (req, res) => Controller.signin(req, res));
