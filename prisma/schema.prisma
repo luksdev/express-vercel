@@ -37,9 +37,10 @@ model Courses {
   // Relations
   instructor Instructors @relation(fields: [id_instructor], references: [id])
 
-  modules        Modules[]
-  startedCourses startedCourses[]
-  ratingCourse   ratingCourse[]
+  modules         Modules[]
+  startedCourses  startedCourses[]
+  ratingCourse    ratingCourse[]
+  finishedClasses finishedClasses[]
 
   @@map("courses")
 }
@@ -50,8 +51,9 @@ model Modules {
   id_course Int
 
   // Relations
-  course  Courses   @relation(fields: [id_course], references: [id])
-  classes Classes[]
+  course          Courses           @relation(fields: [id_course], references: [id])
+  classes         Classes[]
+  finishedClasses finishedClasses[]
 
   @@map("modules")
 }
@@ -66,9 +68,10 @@ model Classes {
   is_finished Boolean? @default(false)
 
   // Relations
-  module   Modules    @relation(fields: [id_module], references: [id])
-  comments Comments[]
-  library  Library[]
+  module          Modules           @relation(fields: [id_module], references: [id])
+  comments        Comments[]
+  library         Library[]
+  finishedClasses finishedClasses[]
 
   @@map("classes")
 }
@@ -156,10 +159,10 @@ model Users {
 }
 
 model ratingCourse {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   rating_text String
-  is_favorite Boolean @default(false)
+  is_favorite Boolean  @default(false)
 
   id_user   Int
   id_course Int
@@ -181,4 +184,17 @@ model startedCourses {
   user   Users   @relation(fields: [id_user], references: [id])
 
   @@map("started_courses")
+}
+
+model finishedClasses {
+  id        Int      @id @default(autoincrement())
+  id_course Int
+  id_module Int
+  id_class  Int
+  id_user   Int
+  createdAt DateTime @default(now())
+  // Relations
+  course    Courses  @relation(fields: [id_course], references: [id])
+  module    Modules  @relation(fields: [id_module], references: [id])
+  class     Classes  @relation(fields: [id_class], references: [id])
 }

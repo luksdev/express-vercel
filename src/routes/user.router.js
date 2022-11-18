@@ -29,6 +29,10 @@ userRouter.post("/user/:user_id/insertCourse/:course_id", async (req, res) =>
   Controller.insertUserToCourse(req, res)
 );
 
+userRouter.post("/user/:user_id/finishClass/:course_id/:module_id/:class_id", async (req, res) =>
+  Controller.finishClass(req, res)
+);
+
 userRouter.post(
   "/user/:user_id/module/:module_id/class/:class_id",
   async (req, res) => Controller.updateClass(req, res)

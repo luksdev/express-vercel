@@ -69,6 +69,18 @@ const insertUserToCourse = async (userId, courseId) => {
   });
 };
 
+const finishClass = async (userId, courseId, moduleId, classId) => {
+  return await db.finishedClasses.create({
+    data: {
+      id_user: userId
+    , id_course: courseId
+    , id_module: moduleId
+    , id_class: classId
+    }
+  })
+
+}
+
 // atualizar is_finished para true que esta na tabela classes
 const updateClass = async (id, id_module, id_user) => {
   return await db.classes.update({
@@ -119,4 +131,5 @@ module.exports = {
   updateUser,
   insertUserToCourse,
   updateClass,
+  finishClass
 };

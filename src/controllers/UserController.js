@@ -115,6 +115,21 @@ const insertUserToCourse = (req, res) => {
     .catch((e) => res.status(500).send(e.message));
 };
 
+const finishClass = (req, res) => {
+  const { user_id, course_id, module_id, class_id } = req.params
+
+  UserService.finishClass(Number(user_id), Number(course_id), Number(module_id), Number(class_id))
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send("User not found");
+      }
+    })
+    .catch((e) => res.status(500).send(e.message));
+
+}
+
 const updateClass = (req, res) => {
   const { user_id, id_module, id_user } = req.params;
 
@@ -166,4 +181,5 @@ module.exports = {
   getUserByIdWithoutJWT,
   insertUserToCourse,
   updateClass,
+  finishClass,
 };
