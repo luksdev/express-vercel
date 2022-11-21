@@ -150,10 +150,11 @@ model Users {
   role       Int      @default(0)
   job        String?
 
-  comments       Comments[]
-  Comments_reply Comments_reply[]
-  startedCourses startedCourses[]
-  ratingCourse   ratingCourse[]
+  comments        Comments[]
+  Comments_reply  Comments_reply[]
+  startedCourses  startedCourses[]
+  ratingCourse    ratingCourse[]
+  finishedClasses finishedClasses[]
 
   @@map("users")
 }
@@ -197,4 +198,5 @@ model finishedClasses {
   course    Courses  @relation(fields: [id_course], references: [id])
   module    Modules  @relation(fields: [id_module], references: [id])
   class     Classes  @relation(fields: [id_class], references: [id])
+  user      Users    @relation(fields: [id_user], references: [id])
 }
