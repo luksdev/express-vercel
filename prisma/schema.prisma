@@ -184,6 +184,7 @@ model startedCourses {
   course Courses @relation(fields: [id_course], references: [id])
   user   Users   @relation(fields: [id_user], references: [id])
 
+  @@unique([id_course, id_user])
   @@map("started_courses")
 }
 

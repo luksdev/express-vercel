@@ -29,8 +29,14 @@ userRouter.post("/user/:user_id/insertCourse/:course_id", async (req, res) =>
   Controller.insertUserToCourse(req, res)
 );
 
-userRouter.post("/user/:user_id/finishClass/:course_id/:module_id/:class_id", async (req, res) =>
-  Controller.finishClass(req, res)
+userRouter.put(
+  "/user/is_finished/:user_id/:course_id/:module_id/:class_id",
+  async (req, res) => Controller.updateIsFinished(req, res)
+);
+
+userRouter.post(
+  "/user/:user_id/finishClass/:course_id/:module_id/:class_id",
+  async (req, res) => Controller.finishClass(req, res)
 );
 
 userRouter.post(

@@ -46,7 +46,15 @@ const getUser = async (id) => {
       updatedAt: true,
       startedCourses: {
         select: {
-          course: true,
+          course: {
+            include: {
+              modules: {
+                include: {
+                  classes: true,
+                },
+              },
+            },
+          },
         },
       },
       finishedClasses: {
@@ -56,6 +64,42 @@ const getUser = async (id) => {
           module: true,
           user: true,
           createdAt: true,
+        },
+      },
+    },
+  });
+};
+
+const updateClass = async (user_id, course_id, module_id, class_id) => {
+  return await db.startedCourses.update({
+    where: {
+      id_course_id_user: {
+        id_course: course_id,
+        id_user: user_id,
+      },
+    },
+    data: {
+      course: {
+        update: {
+          modules: {
+            update: {
+              where: {
+                id: module_id,
+              },
+              data: {
+                classes: {
+                  update: {
+                    where: {
+                      id: class_id,
+                    },
+                    data: {
+                      is_finished: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -90,6 +134,17 @@ const insertUserToCourse = async (userId, courseId) => {
       id_user: userId,
       id_course: courseId,
     },
+    include: {
+      course: {
+        include: {
+          modules: {
+            include: {
+              classes: true,
+            },
+          },
+        },
+      },
+    },
   });
 };
 
@@ -105,19 +160,6 @@ const finishClass = async (userId, courseId, moduleId, classId) => {
 };
 
 // atualizar is_finished para true que esta na tabela classes
-const updateClass = async (id, id_module, id_user) => {
-  return await db.classes.update({
-    // Quando id_module for igual ao id_module do parametro
-    where: {
-      id_user,
-      id_module,
-      id,
-    },
-    data: {
-      is_finished: true,
-    },
-  });
-};
 
 const deleteUser = async (id) => {
   return await db.users.delete({
